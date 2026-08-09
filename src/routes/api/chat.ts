@@ -87,6 +87,10 @@ export const Route = createFileRoute("/api/chat")({
         return result.toUIMessageStreamResponse({
           originalMessages: messages,
           headers: { "Cache-Control": "no-store" },
+          onError: (error) => {
+            console.error("Gemini chat request failed", error);
+            return "The assistant is temporarily unavailable. Please try again later or contact the hotline: +7 800 555-01-23.";
+          },
         });
       },
     },
