@@ -1,8 +1,7 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { useEffect, useRef, useState } from "react";
-import { Send, Bot, User, Loader2, Trash2, LogIn } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Send, Bot, User, Loader2, Trash2 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -16,7 +15,7 @@ export function HelpChat({
   open: boolean;
   onOpenChange: (v: boolean) => void;
 }) {
-  const { user, loading: authLoading } = useAuth();
+  const { user } = useAuth();
   const [input, setInput] = useState("");
   const [historyLoaded, setHistoryLoaded] = useState(false);
   const savedIds = useRef<Set<string>>(new Set());
@@ -116,101 +115,84 @@ export function HelpChat({
           </div>
         </SheetHeader>
 
-        {!authLoading && !user ? (
-          <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
-            <Bot className="h-10 w-10 text-primary" />
-            <div>
-              <p className="font-medium">Sign in to save your history</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Ask questions and come back to the conversation anytime.
-              </p>
-            </div>
-            <Button asChild>
-              <Link to="/auth">
-                <LogIn className="mr-2 h-4 w-4" /> Sign in
-              </Link>
-            </Button>
-          </div>
-        ) : (
-          <>
-            <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-5 py-6">
-              {messages.length === 0 && (
-                <div className="rounded-xl border bg-muted/40 p-4 text-sm text-muted-foreground">
-                  Ask about product origin, quality checks, or how to contact a farm. A hotline is
-                  also available:{" "}
-                  <span className="font-medium text-foreground">+7 800 555-01-23</span>.
-                </div>
-              )}
-              {messages.map((m, i) => {
-                const text = m.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
-                const isUser = m.role === "user";
-                const isLastUser = isUser && i === messages.length - 1;
-                return (
-                  <div key={m.id} className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
-                    <div
-                      className={`mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${isUser ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"}`}
-                    >
-                      {isUser ? <User className="h-3.5 w-3.5" /> : <Bot className="h-3.5 w-3.5" />}
-                    </div>
-                    <div className="max-w-[80%] space-y-1">
-                      <div
-                        className={`whitespace-pre-wrap rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-                          isUser ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
-                        }`}
-                      >
-                        {text}
-                      </div>
-                      {!isUser && !isLoading && (
-                        <button
-                          onClick={() => repeat(text.slice(0, 200))}
-                          className="text-[11px] text-muted-foreground hover:text-foreground"
-                        >
-                          Refine this answer
-                        </button>
-                      )}
-                      {isLastUser && !isLoading && (
-                        <button
-                          onClick={() => sendMessage({ text })}
-                          className="text-[11px] text-muted-foreground hover:text-foreground"
-                        >
-                          Repeat question
-                        </button>
-                      )}
-                    </div>
+        <>
+          <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-5 py-6">
+            {messages.length === 0 && (
+              <div className="rounded-xl border bg-muted/40 p-4 text-sm text-muted-foreground">
+                Ask about product origin, quality checks, or how to contact a farm. A hotline is
+                also available:{" "}
+                <span className="font-medium text-foreground">+7 800 555-01-23</span>.
+              </div>
+            )}
+            {messages.map((m, i) => {
+              const text = m.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
+              const isUser = m.role === "user";
+              const isLastUser = isUser && i === messages.length - 1;
+              return (
+                <div key={m.id} className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
+                  <div
+                    className={`mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${isUser ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"}`}
+                  >
+                    {isUser ? <User className="h-3.5 w-3.5" /> : <Bot className="h-3.5 w-3.5" />}
                   </div>
-                );
-              })}
-              {status === "submitted" && (
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Loader2 className="h-4 w-4 animate-spin" /> Thinking…
+                  <div className="max-w-[80%] space-y-1">
+                    <div
+                      className={`whitespace-pre-wrap rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
+                        isUser ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
+                      }`}
+                    >
+                      {text}
+                    </div>
+                    {!isUser && !isLoading && (
+                      <button
+                        onClick={() => repeat(text.slice(0, 200))}
+                        className="text-[11px] text-muted-foreground hover:text-foreground"
+                      >
+                        Refine this answer
+                      </button>
+                    )}
+                    {isLastUser && !isLoading && (
+                      <button
+                        onClick={() => sendMessage({ text })}
+                        className="text-[11px] text-muted-foreground hover:text-foreground"
+                      >
+                        Repeat question
+                      </button>
+                    )}
+                  </div>
                 </div>
-              )}
-            </div>
+              );
+            })}
+            {status === "submitted" && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Loader2 className="h-4 w-4 animate-spin" /> Thinking…
+              </div>
+            )}
+          </div>
 
-            <form
-              className="flex gap-2 border-t bg-card p-3"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const text = input.trim();
-                if (!text || isLoading) return;
-                sendMessage({ text });
-                setInput("");
-              }}
-            >
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Your question…"
-                className="flex-1 rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
-                disabled={isLoading}
-              />
-              <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
-                <Send className="h-4 w-4" />
-              </Button>
-            </form>
-          </>
-        )}
+          <form
+            className="flex gap-2 border-t bg-card p-3"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const text = input.trim();
+              if (!text || isLoading) return;
+              sendMessage({ text });
+              setInput("");
+            }}
+          >
+            <input
+              ref={inputRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Your question…"
+              className="flex-1 rounded-lg border bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+              disabled={isLoading}
+            />
+            <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
+              <Send className="h-4 w-4" />
+            </Button>
+          </form>
+        </>
       </SheetContent>
     </Sheet>
   );
