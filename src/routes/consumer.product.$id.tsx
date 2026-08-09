@@ -148,7 +148,7 @@ function ProductPage() {
         <span className="text-sm font-medium">Help</span>
       </button>
 
-      <HelpChat open={chatOpen} onOpenChange={setChatOpen} />
+      <HelpChat open={chatOpen} onOpenChange={setChatOpen} productId={p.id} />
     </main>
   );
 }

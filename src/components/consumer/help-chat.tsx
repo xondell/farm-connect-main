@@ -11,9 +11,11 @@ import { useAuth } from "@/lib/use-auth";
 export function HelpChat({
   open,
   onOpenChange,
+  productId,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
+  productId?: string;
 }) {
   const { user } = useAuth();
   const [input, setInput] = useState("");
@@ -21,7 +23,7 @@ export function HelpChat({
   const savedIds = useRef<Set<string>>(new Set());
 
   const { messages, sendMessage, setMessages, status } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
+    transport: new DefaultChatTransport({ api: "/api/chat", body: { productId } }),
     onError: (err) => toast.error(err.message || "Chat error"),
   });
 
