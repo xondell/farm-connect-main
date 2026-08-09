@@ -1,0 +1,53 @@
+import { useEffect, useState } from "react";
+import type { User } from "@supabase/supabase-js";
+import { supabase } from "@/integrations/supabase/client";
+
+export type AuthState = {
+  user: User | null;
+  loading: boolean;
+  isAdmin: boolean;
+};
+
+export function useAuth(): AuthState {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      setUser(session?.user ?? null);
+    });
+    supabase.auth.getSession().then(({ data }) => {
+      setUser(data.session?.user ?? null);
+      setLoading(false);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!user) {
+      setIsAdmin(false);
+      return;
+    }
+    supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .eq("role", "admin")
+      .maybeSingle()
+      .then(({ data }) => {
+        if (!cancelled) setIsAdmin(!!data);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
+
+  return { user, loading, isAdmin };
+}
+
+export async function signOut() {
+  await supabase.auth.signOut();
+  window.location.href = "/";
+}
