@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { gateway } from "@ai-sdk/gateway";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
-import { createAiGatewayProvider } from "@/lib/ai-gateway.server";
 
 const SYSTEM_PROMPT = `You are a friendly AI assistant for AgroLink, helping consumers understand product origin, quality checks, QR codes on packaging, and how to contact farms.
 
@@ -45,13 +45,6 @@ export const Route = createFileRoute("/api/chat")({
           return new Response("Invalid message payload", { status: 400 });
         }
 
-        const key = process.env.AI_GATEWAY_API_KEY;
-        if (!key) {
-          console.error("Chat service is not configured: AI_GATEWAY_API_KEY is missing.");
-          return new Response("Chat service is temporarily unavailable", { status: 503 });
-        }
-
-        const gateway = createAiGatewayProvider(key);
         const result = streamText({
           model: gateway("openai/gpt-5.4"),
           system: SYSTEM_PROMPT,

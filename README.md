@@ -42,9 +42,9 @@ npm run dev
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | Браузерный клиент Supabase        | Да              |
 | `SUPABASE_URL`                  | SSR и защищённые server functions | Да              |
 | `SUPABASE_PUBLISHABLE_KEY`      | SSR и защищённые server functions | Да              |
-| `AI_GATEWAY_API_KEY`            | Серверный маршрут `/api/chat`     | Только для чата |
+| `AI_GATEWAY_API_KEY`            | Локальная разработка вне Vercel   | Нет: на Vercel используется OIDC |
 
-Значения с префиксом `VITE_` публичны и попадают в клиентский JavaScript. Секреты, включая `AI_GATEWAY_API_KEY` и `SUPABASE_SERVICE_ROLE_KEY`, никогда не добавляйте с префиксом `VITE_` и не коммитьте. В текущем приложении service role key не нужна.
+Значения с префиксом `VITE_` публичны и попадают в клиентский JavaScript. Секреты, включая `AI_GATEWAY_API_KEY` и `SUPABASE_SERVICE_ROLE_KEY`, никогда не добавляйте с префиксом `VITE_` и не коммитьте. На Vercel AI Gateway использует автоматически выдаваемый OIDC-токен; в другой среде добавьте `AI_GATEWAY_API_KEY`. В текущем приложении service role key не нужна.
 
 ## Проверки
 
@@ -60,7 +60,7 @@ npm run check      # Все проверки (эквивалент build)
 ## Деплой на Vercel
 
 1. Создайте проект в Vercel и импортируйте репозиторий. Корневая директория — корень этого репозитория.
-2. В **Settings → Environment Variables** добавьте переменные из таблицы выше для окружений Preview и Production. `AI_GATEWAY_API_KEY` добавляйте только как server-side secret.
+2. В **Settings → Environment Variables** добавьте переменные Supabase из таблицы выше для окружений Preview и Production. Для Vercel AI Gateway отдельный ключ не нужен: на deployment используется OIDC.
 3. Vercel использует `npm ci`, затем `npm run build`. Конфигурация в `vite.config.ts` собирает Nitro с preset `vercel` и создаёт совместимый Vercel Build Output API в `.vercel/output`.
 4. Создайте Preview deployment, проверьте `/`, `/farmer`, `/consumer`, страницу продукта и при включённом ключе `/api/chat`. Затем продвигайте тот же проверенный preview в Production.
 
