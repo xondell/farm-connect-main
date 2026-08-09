@@ -15,7 +15,7 @@ AgroLink соединяет фермеров и потребителей: фер
 - React 19, TypeScript, Vite и TanStack Start/TanStack Router
 - Tailwind CSS и Radix UI
 - Supabase (Auth и PostgreSQL)
-- Vercel AI SDK и Google AI Studio (Gemini API)
+- Vercel AI SDK и Google AI Studio (Gemini 3.6 Flash API)
 - Nitro с Vercel Build Output API
 
 ## Локальный запуск
