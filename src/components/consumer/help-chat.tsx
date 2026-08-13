@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/use-auth";
+import agroHelpLogo from "../../../agrohelp.png";
 
 export function HelpChat({
   open,
@@ -104,9 +105,11 @@ export function HelpChat({
         <SheetHeader className="border-b px-5 py-4">
           <div className="flex items-center justify-between">
             <SheetTitle className="flex items-center gap-2">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Bot className="h-4 w-4" />
-              </span>
+              <img
+                src={agroHelpLogo}
+                alt="AgroHelp"
+                className="h-8 w-8 rounded-full object-cover"
+              />
               AgroLink Assistant
             </SheetTitle>
             {user && messages.length > 0 && (
