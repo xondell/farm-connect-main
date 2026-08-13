@@ -11,17 +11,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — AgroLink" },
+      { title: "Sign in — AgroHelp" },
       {
         name: "description",
         content:
-          "Sign in to AgroLink to track tickets, receive notifications, and view chat history.",
+          "Sign in to AgroHelp to track tickets, receive notifications, and view chat history.",
       },
-      { property: "og:title", content: "Sign in — AgroLink" },
+      { property: "og:title", content: "Sign in — AgroHelp" },
       {
         property: "og:description",
         content:
-          "Sign in to AgroLink to track tickets, receive notifications, and view chat history.",
+          "Sign in to AgroHelp to track tickets, receive notifications, and view chat history.",
       },
     ],
   }),
@@ -91,7 +91,7 @@ function AuthPage() {
               <Sprout className="h-6 w-6" />
             </div>
             <div>
-              <h1 className="text-2xl font-semibold">AgroLink</h1>
+              <h1 className="text-2xl font-semibold">AgroHelp</h1>
               <p className="text-sm text-muted-foreground">Sign in or create an account</p>
             </div>
           </div>

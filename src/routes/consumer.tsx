@@ -10,13 +10,13 @@ import { AccountNav } from "@/components/account-nav";
 export const Route = createFileRoute("/consumer")({
   head: () => ({
     meta: [
-      { title: "Product Transparency — AgroLink" },
+      { title: "Product Transparency — AgroHelp" },
       {
         name: "description",
         content:
           "Scan a QR code, see the product's journey from farm to shelf, and ask the AI assistant questions.",
       },
-      { property: "og:title", content: "Product Transparency — AgroLink" },
+      { property: "og:title", content: "Product Transparency — AgroHelp" },
       {
         property: "og:description",
         content:

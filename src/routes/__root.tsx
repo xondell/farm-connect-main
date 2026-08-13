@@ -75,12 +75,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AgroLink" },
+      { title: "AgroHelp" },
       {
         name: "description",
         content: "Transparent agriculture: farmer data and QR product traceability.",
       },
-      { property: "og:title", content: "AgroLink" },
+      { property: "og:title", content: "AgroHelp" },
       {
         property: "og:description",
         content: "Transparent agriculture: farmer data and QR product traceability.",

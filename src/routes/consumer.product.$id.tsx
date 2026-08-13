@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export const Route = createFileRoute("/consumer/product/$id")({
   head: ({ loaderData }: { loaderData?: Product }) => ({
     meta: [
-      { title: loaderData ? `${loaderData.name} — AgroLink` : "Product — AgroLink" },
+      { title: loaderData ? `${loaderData.name} — AgroHelp` : "Product — AgroHelp" },
       {
         name: "description",
         content: loaderData
@@ -15,7 +15,7 @@ export const Route = createFileRoute("/consumer/product/$id")({
       },
       {
         property: "og:title",
-        content: loaderData ? `${loaderData.name} — AgroLink` : "Product — AgroLink",
+        content: loaderData ? `${loaderData.name} — AgroHelp` : "Product — AgroHelp",
       },
       {
         property: "og:description",
@@ -80,7 +80,7 @@ function ProductPage() {
             />
           </div>
           <div className="space-y-4">
-            <Badge variant="secondary">Verified by AgroLink</Badge>
+            <Badge variant="secondary">Verified by AgroHelp</Badge>
             <h1 className="text-4xl font-semibold leading-tight">{p.name}</h1>
             <div className="space-y-2 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">

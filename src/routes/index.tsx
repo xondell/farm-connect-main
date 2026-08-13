@@ -5,12 +5,12 @@ import heroImg from "@/assets/hero-field.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AgroLink — transparent agriculture" },
+      { title: "AgroHelp — transparent agriculture" },
       {
         name: "description",
         content: "Farm data, AI recommendations, and QR-code product traceability.",
       },
-      { property: "og:title", content: "AgroLink — transparent agriculture" },
+      { property: "og:title", content: "AgroHelp — transparent agriculture" },
       {
         property: "og:description",
         content: "Farm data, AI recommendations, and QR-code product traceability.",
@@ -36,7 +36,7 @@ function Landing() {
           <p className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
             2026 Pilot · 12 farms
           </p>
-          <h1 className="text-5xl font-semibold leading-tight md:text-7xl">AgroLink</h1>
+          <h1 className="text-5xl font-semibold leading-tight md:text-7xl">AgroHelp</h1>
           <p className="mt-4 max-w-xl text-lg text-foreground/80 md:text-xl">
             One platform between the farm and your table. Data, AI, and full transparency for every
             product.

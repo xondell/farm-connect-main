@@ -110,7 +110,7 @@ export function HelpChat({
                 alt="AgroHelp"
                 className="h-8 w-8 rounded-full object-cover"
               />
-              AgroLink Assistant
+              AgroHelp Assistant
             </SheetTitle>
             {user && messages.length > 0 && (
               <Button variant="ghost" size="icon" onClick={clearHistory} title="Clear history">

@@ -19,7 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/lib/use-auth";
 
 export const Route = createFileRoute("/_authenticated/admin")({
-  head: () => ({ meta: [{ title: "Admin — AgroLink" }] }),
+  head: () => ({ meta: [{ title: "Admin — AgroHelp" }] }),
   component: AdminPage,
 });
 
