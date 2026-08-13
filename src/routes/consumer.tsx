@@ -1,23 +1,22 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, QrCode, ShieldCheck, MessageCircle } from "lucide-react";
+import { ArrowLeft, QrCode, ShieldCheck } from "lucide-react";
 import { inspectionNews, products } from "@/data/consumer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { HelpChat } from "@/components/consumer/help-chat";
 import { AccountNav } from "@/components/account-nav";
 
 export const Route = createFileRoute("/consumer")({
   head: () => ({
     meta: [
-      { title: "Product Transparency — AgroLink" },
+      { title: "Product Transparency — AgroHelp" },
       {
         name: "description",
         content:
           "Scan a QR code, see the product's journey from farm to shelf, and ask the AI assistant questions.",
       },
-      { property: "og:title", content: "Product Transparency — AgroLink" },
+      { property: "og:title", content: "Product Transparency — AgroHelp" },
       {
         property: "og:description",
         content:
@@ -31,7 +30,6 @@ export const Route = createFileRoute("/consumer")({
 function ConsumerHome() {
   const navigate = useNavigate();
   const [code, setCode] = useState("");
-  const [chatOpen, setChatOpen] = useState(false);
   const examples = Object.keys(products);
 
   function go(id: string) {
@@ -120,16 +118,6 @@ function ConsumerHome() {
           </div>
         </section>
       </div>
-
-      <button
-        onClick={() => setChatOpen(true)}
-        className="fixed bottom-6 right-6 inline-flex h-14 items-center gap-2 rounded-full bg-primary px-5 text-primary-foreground shadow-lg hover:opacity-95"
-      >
-        <MessageCircle className="h-5 w-5" />
-        <span className="text-sm font-medium">Help</span>
-      </button>
-
-      <HelpChat open={chatOpen} onOpenChange={setChatOpen} />
     </main>
   );
 }

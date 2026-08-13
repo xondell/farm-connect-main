@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/lib/use-auth";
 
 export const Route = createFileRoute("/_authenticated/alerts")({
-  head: () => ({ meta: [{ title: "Notifications — AgroLink" }] }),
+  head: () => ({ meta: [{ title: "Notifications — AgroHelp" }] }),
   component: AlertsPage,
 });
 

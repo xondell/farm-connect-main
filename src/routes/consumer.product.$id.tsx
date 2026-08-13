@@ -1,14 +1,12 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowLeft, ShieldCheck, MapPin, Calendar, MessageCircle } from "lucide-react";
+import { ArrowLeft, ShieldCheck, MapPin, Calendar } from "lucide-react";
 import { products, type Product } from "@/data/consumer";
 import { Badge } from "@/components/ui/badge";
-import { HelpChat } from "@/components/consumer/help-chat";
 
 export const Route = createFileRoute("/consumer/product/$id")({
   head: ({ loaderData }: { loaderData?: Product }) => ({
     meta: [
-      { title: loaderData ? `${loaderData.name} — AgroLink` : "Product — AgroLink" },
+      { title: loaderData ? `${loaderData.name} — AgroHelp` : "Product — AgroHelp" },
       {
         name: "description",
         content: loaderData
@@ -17,7 +15,7 @@ export const Route = createFileRoute("/consumer/product/$id")({
       },
       {
         property: "og:title",
-        content: loaderData ? `${loaderData.name} — AgroLink` : "Product — AgroLink",
+        content: loaderData ? `${loaderData.name} — AgroHelp` : "Product — AgroHelp",
       },
       {
         property: "og:description",
@@ -55,7 +53,6 @@ function ProductNotFound() {
 
 function ProductPage() {
   const p = Route.useLoaderData() as Product;
-  const [chatOpen, setChatOpen] = useState(false);
 
   return (
     <main className="min-h-screen">
@@ -83,7 +80,7 @@ function ProductPage() {
             />
           </div>
           <div className="space-y-4">
-            <Badge variant="secondary">Verified by AgroLink</Badge>
+            <Badge variant="secondary">Verified by AgroHelp</Badge>
             <h1 className="text-4xl font-semibold leading-tight">{p.name}</h1>
             <div className="space-y-2 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
@@ -139,16 +136,6 @@ function ProductPage() {
           <div className="mt-4 aspect-[2/1] w-full overflow-hidden rounded-xl border bg-[url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&auto=format')] bg-cover bg-center opacity-90" />
         </section>
       </div>
-
-      <button
-        onClick={() => setChatOpen(true)}
-        className="fixed bottom-6 right-6 inline-flex h-14 items-center gap-2 rounded-full bg-primary px-5 text-primary-foreground shadow-lg hover:opacity-95"
-      >
-        <MessageCircle className="h-5 w-5" />
-        <span className="text-sm font-medium">Help</span>
-      </button>
-
-      <HelpChat open={chatOpen} onOpenChange={setChatOpen} />
     </main>
   );
 }

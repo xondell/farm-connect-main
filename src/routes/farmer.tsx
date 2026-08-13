@@ -8,12 +8,12 @@ import { AccountNav } from "@/components/account-nav";
 export const Route = createFileRoute("/farmer")({
   head: () => ({
     meta: [
-      { title: "Farmer Dashboard — AgroLink" },
+      { title: "Farmer Dashboard — AgroHelp" },
       {
         name: "description",
         content: "Sensors, weather, AI advice, training videos, and news from pilot farms.",
       },
-      { property: "og:title", content: "Farmer Dashboard — AgroLink" },
+      { property: "og:title", content: "Farmer Dashboard — AgroHelp" },
       {
         property: "og:description",
         content: "Sensors, weather, AI advice, training videos, and news from pilot farms.",

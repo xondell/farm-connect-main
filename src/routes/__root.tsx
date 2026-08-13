@@ -7,8 +7,10 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
+import { MessageCircle } from "lucide-react";
 import { Toaster } from "sonner";
+import { HelpChat } from "@/components/consumer/help-chat";
 
 import appCss from "../styles.css?url";
 
@@ -73,12 +75,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AgroLink" },
+      { title: "AgroHelp" },
       {
         name: "description",
         content: "Transparent agriculture: farmer data and QR product traceability.",
       },
-      { property: "og:title", content: "AgroLink" },
+      { property: "og:title", content: "AgroHelp" },
       {
         property: "og:description",
         content: "Transparent agriculture: farmer data and QR product traceability.",
@@ -119,10 +121,20 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [chatOpen, setChatOpen] = useState(false);
 
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <button
+        onClick={() => setChatOpen(true)}
+        className="fixed bottom-6 right-6 z-40 inline-flex h-14 items-center gap-2 rounded-full bg-primary px-5 text-primary-foreground shadow-lg transition-opacity hover:opacity-95"
+        aria-label="Open AI assistant"
+      >
+        <MessageCircle className="h-5 w-5" />
+        <span className="text-sm font-medium">Help</span>
+      </button>
+      <HelpChat open={chatOpen} onOpenChange={setChatOpen} />
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
