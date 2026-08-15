@@ -1,99 +1,177 @@
-# AgroLink
+<div align="center">
 
-AgroLink соединяет фермеров и потребителей: фермерам доступны данные датчиков, рекомендации и обучающие материалы, а покупатели могут проверить путь продукта по QR-коду и обратиться в чат поддержки.
+# 🌾 AgroLink
 
-## Возможности
+### Smart farm data for producers. Transparent food data for consumers.
 
-- Кабинет фермера: показатели полей, рекомендации, обучающие видео и новости пилотных ферм.
-- Раздел потребителя: поиск продукта по коду, происхождение, даты и результаты лабораторных проверок.
-- Аутентификация и история обращений через Supabase.
-- Потоковый AI-чат для вопросов о происхождении и качестве продуктов.
-- SSR и API-роуты на TanStack Start; целевая платформа — Vercel.
+A full-stack platform that connects **farm intelligence**, **food traceability**, and an **AI support experience** in one application.
 
-## Стек
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![TanStack](https://img.shields.io/badge/TanStack-Start-FF4154)
+![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3FCF8E?logo=supabase&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-ready-000000?logo=vercel&logoColor=white)
 
-- React 19, TypeScript, Vite и TanStack Start/TanStack Router
-- Tailwind CSS и Radix UI
-- Supabase (Auth и PostgreSQL)
-- Vercel AI SDK и Vercel AI Gateway
-- Nitro с Vercel Build Output API
+</div>
 
-## Локальный запуск
+---
 
-Требуется Node.js 22 или новее и npm.
+## 🌍 What AgroLink does
+
+Agricultural technology is useful only when people can understand and trust the information around it.
+
+AgroLink serves two audiences:
+
+### For farmers
+
+- field and sensor indicators;
+- practical recommendations;
+- educational content;
+- pilot-farm updates and learning materials.
+
+### For consumers
+
+- product lookup by code;
+- origin and production information;
+- dates and available laboratory results;
+- support chat for questions about products and food quality.
+
+## ✨ Core features
+
+- 🔐 Authentication backed by **Supabase**
+- 🧑‍🌾 Dedicated farmer experience
+- 🛒 Consumer product traceability flow
+- 🤖 Streaming AI chat
+- 🗃 Chat/history persistence
+- ⚡ Server-side rendering and API routes with **TanStack Start**
+- ☁️ Vercel-targeted production build
+- 📱 Responsive UI
+
+## 🧱 Architecture
+
+```mermaid
+flowchart LR
+    U[User] --> A[React + TanStack Start]
+    A --> S[Supabase]
+    A --> C[Server/API Routes]
+    C --> G[Vercel AI Gateway]
+    S --> D[(PostgreSQL)]
+    S --> AU[Auth]
+```
+
+## 🛠 Tech stack
+
+| Area | Technology |
+|---|---|
+| UI | React 19, TypeScript |
+| App framework | TanStack Start, TanStack Router |
+| Styling | Tailwind CSS, Radix UI |
+| Build tooling | Vite |
+| Database & Auth | Supabase / PostgreSQL |
+| AI | Vercel AI SDK + Vercel AI Gateway |
+| Deployment | Vercel / Nitro |
+
+## 🚀 Local development
+
+### Requirements
+
+- Node.js 22+
+- npm
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/xondell/farm-connect-main.git
 cd farm-connect-main
 cp .env.example .env
 npm ci
 npm run dev
 ```
 
-Откройте адрес, который выведет Vite (обычно `http://localhost:5173`).
+Open the URL printed by Vite.
 
-### Переменные окружения
+## 🔐 Environment variables
 
-Заполните `.env` по шаблону `.env.example`:
+Create `.env` from `.env.example`.
 
-| Переменная                      | Где используется                  | Обязательна     |
-| ------------------------------- | --------------------------------- | --------------- |
-| `VITE_SUPABASE_URL`             | Браузерный клиент Supabase        | Да              |
-| `VITE_SUPABASE_PUBLISHABLE_KEY` | Браузерный клиент Supabase        | Да              |
-| `SUPABASE_URL`                  | SSR и защищённые server functions | Да              |
-| `SUPABASE_PUBLISHABLE_KEY`      | SSR и защищённые server functions | Да              |
-| `AI_GATEWAY_API_KEY`            | Локальная разработка вне Vercel   | Нет: на Vercel используется OIDC |
+| Variable | Purpose | Required |
+|---|---|---|
+| `VITE_SUPABASE_URL` | Browser Supabase client | Yes |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Browser Supabase client | Yes |
+| `SUPABASE_URL` | SSR/server functions | Yes |
+| `SUPABASE_PUBLISHABLE_KEY` | SSR/server functions | Yes |
+| `AI_GATEWAY_API_KEY` | Local AI Gateway auth outside Vercel | No on Vercel |
 
-Значения с префиксом `VITE_` публичны и попадают в клиентский JavaScript. Секреты, включая `AI_GATEWAY_API_KEY` и `SUPABASE_SERVICE_ROLE_KEY`, никогда не добавляйте с префиксом `VITE_` и не коммитьте. На Vercel AI Gateway использует автоматически выдаваемый OIDC-токен; в другой среде добавьте `AI_GATEWAY_API_KEY`. В текущем приложении service role key не нужна.
+> Variables beginning with `VITE_` are exposed to client-side JavaScript. Never place service-role keys or other secrets behind a `VITE_` prefix.
 
-## Проверки
+## ✅ Quality checks
 
 ```bash
-npm run lint       # ESLint и Prettier-правила
-npm run typecheck  # Проверка TypeScript
-npm run build      # Полная проверка + production-сборка
-npm run check      # Все проверки (эквивалент build)
+npm run lint
+npm run typecheck
+npm run build
+npm run check
 ```
 
-`npm run build` намеренно запускает линтер и проверку типов до сборки: Vercel не выпустит артефакт с известной ошибкой.
+The production build runs validation before creating the deployment artifact.
 
-## Деплой на Vercel
+## 🗄 Supabase
 
-1. Создайте проект в Vercel и импортируйте репозиторий. Корневая директория — корень этого репозитория.
-2. В **Settings → Environment Variables** добавьте переменные Supabase из таблицы выше для окружений Preview и Production. Для Vercel AI Gateway отдельный ключ не нужен: на deployment используется OIDC.
-3. Vercel использует `npm ci`, затем `npm run build`. Конфигурация в `vite.config.ts` собирает Nitro с preset `vercel` и создаёт совместимый Vercel Build Output API в `.vercel/output`.
-4. Создайте Preview deployment, проверьте `/`, `/farmer`, `/consumer`, страницу продукта и при включённом ключе `/api/chat`. Затем продвигайте тот же проверенный preview в Production.
+Database migrations live in:
 
-Для ручного деплоя после входа в Vercel CLI:
+```text
+supabase/migrations/
+```
+
+Apply the required migrations before enabling flows that depend on authentication or chat history.
+
+For hosted deployments, remember to configure the production and preview domains in **Supabase Authentication → URL Configuration** so auth redirects resolve correctly.
+
+## 📁 Project structure
+
+```text
+src/
+├── routes/                 # Pages, protected routes and API endpoints
+├── components/             # UI components
+├── data/                   # Demo/storefront data
+├── integrations/supabase/  # Supabase clients and auth middleware
+├── lib/                    # Shared utilities
+└── assets/                 # Bundled assets
+
+supabase/
+└── migrations/             # Database migrations
+
+public/                     # Static assets
+scripts/                    # Build/deployment helpers
+```
+
+## ☁️ Deployment
+
+The repository targets Vercel.
+
+1. Import the GitHub repository into Vercel.
+2. Add Supabase environment variables for Preview and Production.
+3. Create a Preview deployment.
+4. Verify the main routes, authentication, product pages, and `/api/chat`.
+5. Promote the tested deployment to Production.
+
+For manual deployment:
 
 ```bash
 npx vercel
 npx vercel --prod
 ```
 
-Финальный шаг сборки добавляет базовые заголовки безопасности и CSP непосредственно в Vercel Build Output API. Если в будущем появятся внешние изображения, аналитика или новый провайдер API, соответствующий домен нужно явно добавить в CSP в `scripts/apply-vercel-headers.mjs`.
+## 🔒 Production checklist
 
-## Supabase
+- Review Supabase RLS policies.
+- Verify auth redirect URLs.
+- Keep service-role credentials out of the client bundle.
+- Add rate limiting/firewall protection to `POST /api/chat`.
+- Test the Preview deployment before production promotion.
 
-Миграции находятся в `supabase/migrations`. Применяйте их через Supabase CLI или CI до включения функций, зависящих от таблиц авторизации и истории чата. После деплоя добавьте домены Preview и Production в Supabase **Authentication → URL Configuration** (Site URL и Redirect URLs), иначе OAuth-вход и возвраты после авторизации не будут работать.
+---
 
-## Структура проекта
+<div align="center">
 
-```text
-src/
-  routes/                 Страницы, защищённые страницы и API-маршруты
-  components/             Компоненты интерфейса
-  data/                   Демонстрационные данные для витрины
-  integrations/supabase/  Клиенты Supabase и auth middleware
-  lib/                    Общие серверные и клиентские утилиты
-  assets/                 Изображения, импортируемые сборщиком
-supabase/migrations/      SQL-миграции
-public/                   Статические файлы
-```
+**AgroLink — turning agricultural data into decisions and food data into trust.**
 
-## Перед запуском в Production
-
-- Включите Vercel Firewall/rate limiting для `POST /api/chat`: ограничение размера запроса в коде защищает от чрезмерного payload, но не заменяет ограничение частоты.
-- Проверьте RLS-политики и OAuth redirect URLs в Supabase.
-- Убедитесь, что в Vercel нет `SUPABASE_SERVICE_ROLE_KEY`, если серверные административные операции не используются.
-- Проверьте внешний вид и функциональность preview URL перед promotion.
+</div>
