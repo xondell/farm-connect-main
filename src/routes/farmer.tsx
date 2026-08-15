@@ -4,6 +4,7 @@ import { ArrowLeft, Sparkles, PlayCircle, X } from "lucide-react";
 import { sensors, aiInsight, financeTips, videos, farmNews } from "@/data/farmer";
 import { Badge } from "@/components/ui/badge";
 import { AccountNav } from "@/components/account-nav";
+import { ProductionJournal } from "@/components/farmer/production-journal";
 
 export const Route = createFileRoute("/farmer")({
   head: () => ({
@@ -11,12 +12,14 @@ export const Route = createFileRoute("/farmer")({
       { title: "Farmer Dashboard — AgroLink" },
       {
         name: "description",
-        content: "Sensors, weather, AI advice, training videos, and news from pilot farms.",
+        content:
+          "Production planning, sensors, weather, AI advice, training videos, and news for farm operations.",
       },
       { property: "og:title", content: "Farmer Dashboard — AgroLink" },
       {
         property: "og:description",
-        content: "Sensors, weather, AI advice, training videos, and news from pilot farms.",
+        content:
+          "Production planning, sensors, weather, AI advice, training videos, and news for farm operations.",
       },
     ],
   }),
@@ -46,6 +49,8 @@ function FarmerDashboard() {
           <h1 className="text-4xl font-semibold">Good morning, Ivan</h1>
           <p className="mt-1 text-muted-foreground">Today's summary, July 29, 2026</p>
         </div>
+
+        <ProductionJournal />
 
         {/* Sensors */}
         <section className="space-y-4">
