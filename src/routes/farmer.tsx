@@ -1,6 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Sparkles, PlayCircle, X } from "lucide-react";
+import {
+  ArrowLeft,
+  Sparkles,
+  PlayCircle,
+  X,
+  TrendingDown,
+  TrendingUp,
+  Star,
+  Timer,
+  BadgeCheck,
+} from "lucide-react";
 import { sensors, aiInsight, financeTips, videos, farmNews } from "@/data/farmer";
 import { Badge } from "@/components/ui/badge";
 import { AccountNav } from "@/components/account-nav";
@@ -29,6 +39,8 @@ export const Route = createFileRoute("/farmer")({
 function FarmerDashboard() {
   const [openVideo, setOpenVideo] = useState<string | null>(null);
   const current = videos.find((v) => v.id === openVideo);
+  const [sortKey, setSortKey] = useState<SortKey>("priority");
+  const tips = sortFinanceTips(financeTips, sortKey);
 
   return (
     <main className="min-h-screen">
@@ -79,9 +91,26 @@ function FarmerDashboard() {
 
         {/* Financial tips */}
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold">Where to spend</h2>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="text-2xl font-semibold">Where to spend</h2>
+            <div className="flex flex-wrap gap-2">
+              {sortOptions.map((o) => (
+                <button
+                  key={o.key}
+                  onClick={() => setSortKey(o.key)}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+                    sortKey === o.key
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "bg-background hover:bg-muted"
+                  }`}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="grid gap-4 md:grid-cols-2">
-            {financeTips.map((t) => (
+            {tips.map((t) => (
               <div key={t.title} className="rounded-2xl border bg-card p-5 shadow-sm">
                 <div className="flex items-start gap-4">
                   <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/20 text-accent-foreground">
@@ -96,6 +125,17 @@ function FarmerDashboard() {
                     </div>
                     <div className="mt-1 text-sm font-semibold text-primary">{t.amount}</div>
                     <p className="mt-2 text-sm text-muted-foreground">{t.reason}</p>
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                      <span className="inline-flex items-center gap-1">
+                        <Star className="h-3.5 w-3.5 text-amber-500" /> {t.rating} ({t.reviews})
+                      </span>
+                      <span className="inline-flex items-center gap-1">
+                        <Timer className="h-3.5 w-3.5" /> ROI ≈ {t.roiMonths} mo
+                      </span>
+                      <span className="inline-flex items-center gap-1">
+                        <BadgeCheck className="h-3.5 w-3.5" /> ~₽{t.cost.toLocaleString("en-US")}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -184,4 +224,34 @@ function FarmerDashboard() {
       )}
     </main>
   );
+}
+
+type SortKey = "priority" | "price-asc" | "price-desc" | "reviews" | "roi";
+
+const sortOptions: { key: SortKey; label: string }[] = [
+  { key: "priority", label: "Priority" },
+  { key: "price-asc", label: "Price ↑" },
+  { key: "price-desc", label: "Price ↓" },
+  { key: "reviews", label: "Reviews" },
+  { key: "roi", label: "Fastest ROI" },
+];
+
+const priorityOrder: Record<string, number> = { High: 0, Medium: 1, Low: 2 };
+
+function sortFinanceTips(tips: typeof financeTips, key: SortKey): typeof financeTips {
+  const copy = [...tips];
+  switch (key) {
+    case "price-asc":
+      return copy.sort((a, b) => a.cost - b.cost);
+    case "price-desc":
+      return copy.sort((a, b) => b.cost - a.cost);
+    case "reviews":
+      return copy.sort((a, b) => b.reviews - a.reviews);
+    case "roi":
+      return copy.sort((a, b) => a.roiMonths - b.roiMonths);
+    default:
+      return copy.sort(
+        (a, b) => priorityOrder[a.priority] - priorityOrder[b.priority] || b.cost - a.cost,
+      );
+  }
 }

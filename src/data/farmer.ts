@@ -26,6 +26,10 @@ export const financeTips = [
     priority: "High",
     amount: "~₽85,000",
     reason: "ROI within 1 season given the dry forecast.",
+    cost: 85000,
+    rating: 4.9,
+    reviews: 214,
+    roiMonths: 12,
   },
   {
     icon: Sprout,
@@ -33,6 +37,10 @@ export const financeTips = [
     priority: "Medium",
     amount: "~₽24,000",
     reason: "Will improve cucumber yield by 12–18%.",
+    cost: 24000,
+    rating: 4.7,
+    reviews: 158,
+    roiMonths: 9,
   },
   {
     icon: Wrench,
@@ -40,6 +48,10 @@ export const financeTips = [
     priority: "Medium",
     amount: "~₽40,000",
     reason: "Preventive maintenance before harvest.",
+    cost: 40000,
+    rating: 4.5,
+    reviews: 96,
+    roiMonths: 18,
   },
   {
     icon: TrendingUp,
@@ -47,6 +59,10 @@ export const financeTips = [
     priority: "Low",
     amount: "~₽9,000",
     reason: "Long-term investment in skills.",
+    cost: 9000,
+    rating: 4.8,
+    reviews: 341,
+    roiMonths: 6,
   },
   {
     icon: Truck,
@@ -54,6 +70,10 @@ export const financeTips = [
     priority: "Low",
     amount: "~₽15,000/mo",
     reason: "Will reduce losses on deliveries to the city.",
+    cost: 15000,
+    rating: 4.4,
+    reviews: 77,
+    roiMonths: 24,
   },
 ];
 
