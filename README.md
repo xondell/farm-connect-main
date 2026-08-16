@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌾 AgroLink
+# 🌾 AgroHelp
 
 ### Smart farm data for producers. Transparent food data for consumers.
 
@@ -16,11 +16,11 @@ A full-stack platform that connects **farm intelligence**, **food traceability**
 
 ---
 
-## 🌍 What AgroLink does
+## 🌍 What AgroHelp does
 
 Agricultural technology is useful only when people can understand and trust the information around it.
 
-AgroLink serves two audiences:
+AgroHelp serves two audiences:
 
 ### For farmers
 
@@ -172,6 +172,6 @@ npx vercel --prod
 
 <div align="center">
 
-**AgroLink — turning agricultural data into decisions and food data into trust.**
+**AgroHelp — turning agricultural data into decisions and food data into trust.**
 
 </div>

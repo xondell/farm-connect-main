@@ -9,13 +9,13 @@ import { ProductionJournal } from "@/components/farmer/production-journal";
 export const Route = createFileRoute("/farmer")({
   head: () => ({
     meta: [
-      { title: "Farmer Dashboard — AgroLink" },
+      { title: "Farmer Dashboard — AgroHelp" },
       {
         name: "description",
         content:
           "Production planning, sensors, weather, AI advice, training videos, and news for farm operations.",
       },
-      { property: "og:title", content: "Farmer Dashboard — AgroLink" },
+      { property: "og:title", content: "Farmer Dashboard — AgroHelp" },
       {
         property: "og:description",
         content:

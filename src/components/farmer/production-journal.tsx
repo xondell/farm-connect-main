@@ -317,7 +317,7 @@ export function ProductionJournal() {
         <div className="rounded-2xl border bg-card p-6 shadow-sm">
           <h3 className="font-medium">Sign in to use the production journal</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Your plan is private and synchronized with your AgroLink account.
+            Your plan is private and synchronized with your AgroHelp account.
           </p>
           <Button asChild className="mt-4">
             <Link to="/auth">Sign in</Link>

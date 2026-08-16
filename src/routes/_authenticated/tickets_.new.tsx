@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 
 export const Route = createFileRoute("/_authenticated/tickets_/new")({
-  head: () => ({ meta: [{ title: "New ticket — AgroLink" }] }),
+  head: () => ({ meta: [{ title: "New ticket — AgroHelp" }] }),
   component: NewTicket,
 });
 

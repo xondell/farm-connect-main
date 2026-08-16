@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/lib/use-auth";
 
 export const Route = createFileRoute("/_authenticated/tickets_/$id")({
-  head: () => ({ meta: [{ title: "Ticket — AgroLink" }] }),
+  head: () => ({ meta: [{ title: "Ticket — AgroHelp" }] }),
   component: TicketDetail,
 });
 
