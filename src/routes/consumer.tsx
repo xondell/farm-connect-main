@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, QrCode, ShieldCheck, MessageCircle } from "lucide-react";
+import { ArrowLeft, QrCode, ShieldCheck, MessageCircle, ChevronRight } from "lucide-react";
 import { inspectionNews, products } from "@/data/consumer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,6 +36,11 @@ function ConsumerHome() {
 
   function go(id: string) {
     navigate({ to: "/consumer/product/$id", params: { id } });
+  }
+
+  function findProductId(name: string): string | undefined {
+    return Object.values(products).find((p) => p.name.toLowerCase().startsWith(name.toLowerCase()))
+      ?.id;
   }
 
   return (
@@ -102,21 +107,42 @@ function ConsumerHome() {
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">Inspection news</h2>
           <div className="space-y-3">
-            {inspectionNews.map((n, i) => (
-              <article key={i} className="rounded-2xl border bg-card p-5 shadow-sm">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <h3 className="font-medium">{n.product}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {n.farm} · {n.lab} · {n.date}
-                    </p>
+            {inspectionNews.map((n, i) => {
+              const productId = findProductId(n.product);
+              const card = (
+                <article
+                  key={i}
+                  className="rounded-2xl border bg-card p-5 shadow-sm transition-colors hover:bg-muted/60"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <h3 className="font-medium">{n.product}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {n.farm} · {n.lab} · {n.date}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Badge className="gap-1">
+                        <ShieldCheck className="h-3.5 w-3.5" /> Passed
+                      </Badge>
+                      {productId && <ChevronRight className="h-4 w-4 text-muted-foreground" />}
+                    </div>
                   </div>
-                  <Badge className="gap-1">
-                    <ShieldCheck className="h-3.5 w-3.5" /> Passed
-                  </Badge>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+              return productId ? (
+                <Link
+                  key={i}
+                  to="/consumer/product/$id"
+                  params={{ id: productId }}
+                  className="block"
+                >
+                  {card}
+                </Link>
+              ) : (
+                card
+              );
+            })}
           </div>
         </section>
       </div>
