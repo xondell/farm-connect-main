@@ -4,78 +4,100 @@
 
 ### Smart farm data for producers. Transparent food data for consumers.
 
-A full-stack platform that connects **farm intelligence**, **food traceability**, and an **AI support experience** in one application.
+A full-stack AgriTech platform that combines **farm intelligence**, **food traceability**, **product provenance**, **lab/inspection context**, and an **AI-assisted support experience**.
 
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+[**Live prototype**](https://farm-connect-main-ochre.vercel.app/) · [**AgroDev project**](https://github.com/xondell/agrodev-climate-champion)
+
+![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)
 ![TanStack](https://img.shields.io/badge/TanStack-Start-FF4154)
 ![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3FCF8E?logo=supabase&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-ready-000000?logo=vercel&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-deployment-000000?logo=vercel&logoColor=white)
 
 </div>
 
 ---
 
-## 🌍 What AgroHelp does
+## Why AgroHelp exists
 
-Agricultural technology is useful only when people can understand and trust the information around it.
+Agricultural technology creates value only when the information behind it is understandable, actionable and trustworthy.
 
-AgroHelp serves two audiences:
+AgroHelp connects two sides of the same food system:
 
-### For farmers
-
-- field and sensor indicators;
+### 🧑‍🌾 For farmers
+- field and production information;
 - practical recommendations;
-- educational content;
-- pilot-farm updates and learning materials.
+- production journal workflows;
+- learning and pilot-farm content;
+- support for turning raw data into decisions.
 
-### For consumers
+### 🛒 For consumers
+- product lookup by traceability code;
+- producer and origin information;
+- production journey and dates;
+- available inspection / lab context;
+- farm location context on OpenStreetMap;
+- product and food-quality support.
 
-- product lookup by code;
-- origin and production information;
-- dates and available laboratory results;
-- support chat for questions about products and food quality.
+## What's new — August 2026
 
-## ✨ Core features
+The repository has moved well beyond the original demo catalog:
 
-- 🔐 Authentication backed by **Supabase**
-- 🧑‍🌾 Dedicated farmer experience
-- 🛒 Consumer product traceability flow
-- 🤖 Streaming AI chat
-- 🗃 Chat/history persistence
-- ⚡ Server-side rendering and API routes with **TanStack Start**
-- ☁️ Vercel-targeted production build
-- 📱 Responsive UI
+- product pages were rebuilt around **Supabase-backed product data** with a local fallback;
+- fake demo products were removed from the consumer experience in favor of traced products;
+- product journeys and available lab checks are loaded with the product record;
+- farm-location context was added with **OpenStreetMap**;
+- the product name was standardized from **AgroLink → AgroHelp**;
+- consumer discovery gained additional sorting controls;
+- customer-facing currency display was switched from RUB to **GBP**.
 
-## 🧱 Architecture
+## Core capabilities
+
+- 🔐 Supabase-backed authentication
+- 🧑‍🌾 Farmer-focused application flows
+- 📓 Farmer production journal
+- 🔎 Product traceability by product code
+- 🧭 Origin / journey / farm-location context
+- 🧪 Available inspection and lab-check data
+- 🤖 Streaming AI chat through the Vercel AI stack
+- 🗃 Persisted chat/history flows
+- ⚡ Server rendering and API routes with TanStack Start
+- 📱 Responsive interface
+- ☁️ Vercel-targeted deployment
+
+## Architecture
 
 ```mermaid
 flowchart LR
-    U[User] --> A[React + TanStack Start]
-    A --> S[Supabase]
-    A --> C[Server/API Routes]
-    C --> G[Vercel AI Gateway]
-    S --> D[(PostgreSQL)]
-    S --> AU[Auth]
+    U[User] --> APP[React + TanStack Start]
+    APP --> SB[Supabase]
+    APP --> API[Server / API routes]
+    SB --> DB[(PostgreSQL)]
+    SB --> AUTH[Auth]
+    SB --> PROD[Products / journeys / checks]
+    API --> AI[Vercel AI Gateway]
+    PROD --> UI[Traceability UI]
 ```
 
-## 🛠 Tech stack
+## Tech stack
 
 | Area | Technology |
 |---|---|
-| UI | React 19, TypeScript |
-| App framework | TanStack Start, TanStack Router |
-| Styling | Tailwind CSS, Radix UI |
-| Build tooling | Vite |
+| UI | React 19.2, TypeScript |
+| App framework | TanStack Start + TanStack Router |
+| Styling | Tailwind CSS 4 + Radix UI |
+| Data fetching | TanStack Query |
 | Database & Auth | Supabase / PostgreSQL |
-| AI | Vercel AI SDK + Vercel AI Gateway |
+| AI | Vercel AI SDK + AI Gateway |
+| Validation | Zod |
+| Build tooling | Vite 8 |
 | Deployment | Vercel / Nitro |
 
-## 🚀 Local development
+## Local development
 
 ### Requirements
 
-- Node.js 22+
+- Node.js **22+**
 - npm
 
 ```bash
@@ -86,9 +108,9 @@ npm ci
 npm run dev
 ```
 
-Open the URL printed by Vite.
+The development URL is printed by Vite.
 
-## 🔐 Environment variables
+## Environment variables
 
 Create `.env` from `.env.example`.
 
@@ -96,82 +118,75 @@ Create `.env` from `.env.example`.
 |---|---|---|
 | `VITE_SUPABASE_URL` | Browser Supabase client | Yes |
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | Browser Supabase client | Yes |
-| `SUPABASE_URL` | SSR/server functions | Yes |
-| `SUPABASE_PUBLISHABLE_KEY` | SSR/server functions | Yes |
-| `AI_GATEWAY_API_KEY` | Local AI Gateway auth outside Vercel | No on Vercel |
+| `SUPABASE_URL` | SSR / server functions | Yes |
+| `SUPABASE_PUBLISHABLE_KEY` | SSR / server functions | Yes |
+| `AI_GATEWAY_API_KEY` | AI Gateway auth outside managed Vercel configuration | Environment-dependent |
 
-> Variables beginning with `VITE_` are exposed to client-side JavaScript. Never place service-role keys or other secrets behind a `VITE_` prefix.
+> `VITE_*` values are exposed to client-side JavaScript. Never put service-role credentials or other secrets behind a `VITE_` prefix.
 
-## ✅ Quality checks
+## Quality checks
 
 ```bash
 npm run lint
 npm run typecheck
 npm run build
-npm run check
 ```
 
-The production build runs validation before creating the deployment artifact.
+The `build` script already runs lint + type checking before the Vite build.
 
-## 🗄 Supabase
+## Supabase
 
-Database migrations live in:
+Versioned database changes live in:
 
 ```text
 supabase/migrations/
 ```
 
-Apply the required migrations before enabling flows that depend on authentication or chat history.
+Apply the required migrations before enabling flows that depend on authentication, persisted chat, product data, journeys or inspection information.
 
-For hosted deployments, remember to configure the production and preview domains in **Supabase Authentication → URL Configuration** so auth redirects resolve correctly.
+For hosted deployments, configure the production and preview domains in **Supabase Authentication → URL Configuration**.
 
-## 📁 Project structure
+## Repository map
 
 ```text
 src/
 ├── routes/                 # Pages, protected routes and API endpoints
 ├── components/             # UI components
-├── data/                   # Demo/storefront data
-├── integrations/supabase/  # Supabase clients and auth middleware
+├── data/                   # Local fallback / presentation data
+├── integrations/supabase/  # Supabase clients and auth integration
 ├── lib/                    # Shared utilities
 └── assets/                 # Bundled assets
 
 supabase/
-└── migrations/             # Database migrations
+└── migrations/             # Versioned database changes
 
 public/                     # Static assets
-scripts/                    # Build/deployment helpers
+scripts/                    # Build / deployment helpers
 ```
 
-## ☁️ Deployment
+## Deployment
 
-The repository targets Vercel.
-
-1. Import the GitHub repository into Vercel.
-2. Add Supabase environment variables for Preview and Production.
-3. Create a Preview deployment.
-4. Verify the main routes, authentication, product pages, and `/api/chat`.
-5. Promote the tested deployment to Production.
-
-For manual deployment:
+The project targets Vercel.
 
 ```bash
 npx vercel
 npx vercel --prod
 ```
 
-## 🔒 Production checklist
+Before promotion to production, verify:
 
-- Review Supabase RLS policies.
-- Verify auth redirect URLs.
-- Keep service-role credentials out of the client bundle.
-- Add rate limiting/firewall protection to `POST /api/chat`.
-- Test the Preview deployment before production promotion.
+- auth redirects;
+- product-code routes;
+- traced product data;
+- map rendering;
+- AI endpoint behavior;
+- Supabase RLS;
+- absence of server secrets from the client bundle.
 
 ---
 
 <div align="center">
 
-**AgroHelp — turning agricultural data into decisions and food data into trust.**
+**AgroHelp — turning agricultural data into decisions and product data into trust.**
 
 </div>
