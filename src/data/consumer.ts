@@ -1,6 +1,7 @@
 import tomatoImg from "@/assets/product-tomato.jpg";
 import cucumberImg from "@/assets/product-cucumber.jpg";
 import eggsImg from "@/assets/product-eggs.jpg";
+import carrotImg from "@/assets/product-carrot.png";
 
 export type Product = {
   id: string;
@@ -73,6 +74,35 @@ export const products: Record<string, Product> = {
       { name: "Freshness", lab: "VetLab", date: "07/26/2026", result: "passed" },
     ],
   },
+  "MD-CAR-050826-F07": {
+    id: "MD-CAR-050826-F07",
+    name: "Fresh Basket Washed Carrots 500 g",
+    farm: "GELINO-GRUP SRL",
+    region: "Orhei, Republic of Moldova",
+    producedAt: "August 7, 2026",
+    image: carrotImg,
+    timeline: [
+      { stage: "Sowing", date: "March 18, 2026", note: "Field F-07, Orhei — variety Nandrin F1" },
+      { stage: "Harvest", date: "August 5, 2026", note: "Field F-07, yield 48.6 t/ha" },
+      {
+        stage: "Washing & sorting",
+        date: "August 6, 2026",
+        note: "Washed with drinking water, calibrated 20–40 mm",
+      },
+      {
+        stage: "Packaging",
+        date: "August 7, 2026",
+        note: "500 g tray, Fresh Basket brand, GTIN 4842142001196",
+      },
+      { stage: "Cold storage", date: "August 7, 2026", note: "Cold chain +5…+7 °C" },
+      { stage: "On shelf", date: "August 7, 2026", note: "GELINO-GRUP distribution" },
+    ],
+    inspections: [
+      { name: "Pesticides", lab: "AgroTest", date: "08/06/2026", result: "passed" },
+      { name: "Nitrates", lab: "AgroTest", date: "08/06/2026", result: "passed" },
+      { name: "Microbiology", lab: "SanExpert", date: "08/06/2026", result: "passed" },
+    ],
+  },
 };
 
 export const inspectionNews = [
@@ -108,6 +138,13 @@ export const inspectionNews = [
     product: "Washed Carrots",
     farm: "Urozhay Farm",
     date: "July 15, 2026",
+    lab: "AgroTest",
+    result: "passed" as const,
+  },
+  {
+    product: "Fresh Basket Washed Carrots",
+    farm: "GELINO-GRUP SRL",
+    date: "August 6, 2026",
     lab: "AgroTest",
     result: "passed" as const,
   },
