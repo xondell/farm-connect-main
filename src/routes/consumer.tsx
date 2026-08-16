@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, QrCode, ShieldCheck, MessageCircle, ChevronRight } from "lucide-react";
-import { inspectionNews, products } from "@/data/consumer";
+import { loadInspectionNews, loadProducts, type ConsumerHomeData } from "@/lib/consumer-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -25,10 +25,15 @@ export const Route = createFileRoute("/consumer")({
       },
     ],
   }),
+  loader: async (): Promise<ConsumerHomeData> => {
+    const [products, news] = await Promise.all([loadProducts(), loadInspectionNews()]);
+    return { products, news };
+  },
   component: ConsumerHome,
 });
 
 function ConsumerHome() {
+  const { products, news } = Route.useLoaderData();
   const navigate = useNavigate();
   const [code, setCode] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
@@ -145,7 +150,7 @@ function ConsumerHome() {
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">Inspection news</h2>
           <div className="space-y-3">
-            {inspectionNews.map((n, i) => {
+            {news.map((n, i) => {
               const productId = findProductId(n.product);
               const card = (
                 <article

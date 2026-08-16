@@ -101,6 +101,7 @@ export type Database = {
           inspection_date: string;
           lab: string;
           notes: string | null;
+          product_code: string | null;
           product_name: string;
           result: string;
         };
@@ -112,6 +113,7 @@ export type Database = {
           inspection_date?: string;
           lab: string;
           notes?: string | null;
+          product_code?: string | null;
           product_name: string;
           result?: string;
         };
@@ -123,6 +125,7 @@ export type Database = {
           inspection_date?: string;
           lab?: string;
           notes?: string | null;
+          product_code?: string | null;
           product_name?: string;
           result?: string;
         };
@@ -155,6 +158,42 @@ export type Database = {
           id?: string;
           published_at?: string;
           title?: string;
+        };
+        Relationships: [];
+      };
+      products: {
+        Row: {
+          code: string;
+          created_at: string;
+          farm: string;
+          image_url: string | null;
+          name: string;
+          produced_at: string;
+          region: string;
+          timeline: Json;
+          updated_at: string;
+        };
+        Insert: {
+          code: string;
+          created_at?: string;
+          farm: string;
+          image_url?: string | null;
+          name: string;
+          produced_at: string;
+          region: string;
+          timeline?: Json;
+          updated_at?: string;
+        };
+        Update: {
+          code?: string;
+          created_at?: string;
+          farm?: string;
+          image_url?: string | null;
+          name?: string;
+          produced_at?: string;
+          region?: string;
+          timeline?: Json;
+          updated_at?: string;
         };
         Relationships: [];
       };

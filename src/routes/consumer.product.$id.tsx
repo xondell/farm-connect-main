@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, ShieldCheck, MapPin, Calendar, MessageCircle } from "lucide-react";
-import { products, type Product } from "@/data/consumer";
+import type { Product } from "@/data/consumer";
+import { loadInspections, loadProduct } from "@/lib/consumer-store";
 import { Badge } from "@/components/ui/badge";
 import { HelpChat } from "@/components/consumer/help-chat";
 
@@ -27,10 +28,12 @@ export const Route = createFileRoute("/consumer/product/$id")({
       },
     ],
   }),
-  loader: ({ params }): Product => {
-    const p = products[params.id.toUpperCase()];
-    if (!p) throw notFound();
-    return p;
+  loader: async ({ params }): Promise<Product> => {
+    const code = params.id.toUpperCase();
+    const product = await loadProduct(code);
+    if (!product) throw notFound();
+    product.inspections = await loadInspections(code);
+    return product;
   },
   notFoundComponent: ProductNotFound,
   component: ProductPage,

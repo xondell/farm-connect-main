@@ -105,7 +105,15 @@ export const products: Record<string, Product> = {
   },
 };
 
-export const inspectionNews = [
+export type InspectionNewsItem = {
+  product: string;
+  farm: string;
+  date: string;
+  lab: string;
+  result: "passed" | "failed";
+};
+
+export const inspectionNews: InspectionNewsItem[] = [
   {
     product: "Pink Cherry Tomatoes",
     farm: "Zarya Farm",
