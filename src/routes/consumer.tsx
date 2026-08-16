@@ -103,6 +103,44 @@ function ConsumerHome() {
           </div>
         </section>
 
+        {/* Catalog */}
+        <section className="space-y-4">
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-2xl font-semibold">Products</h2>
+            <span className="text-sm text-muted-foreground">
+              Tap a card to open the product page
+            </span>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {Object.values(products).map((p) => (
+              <Link
+                key={p.id}
+                to="/consumer/product/$id"
+                params={{ id: p.id }}
+                className="group overflow-hidden rounded-2xl border bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="aspect-[4/3] overflow-hidden bg-muted">
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                    width={1024}
+                    height={768}
+                  />
+                </div>
+                <div className="p-4">
+                  <div className="font-medium">{p.name}</div>
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    {p.farm} · {p.region}
+                  </p>
+                  <p className="mt-2 font-mono text-xs text-muted-foreground">{p.id}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         {/* News */}
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">Inspection news</h2>
