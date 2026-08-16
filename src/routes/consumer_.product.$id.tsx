@@ -60,6 +60,29 @@ function ProductPage() {
   const p = Route.useLoaderData() as Product;
   const [chatOpen, setChatOpen] = useState(false);
 
+  // We currently only have an approximate geographic location for this
+  // demo product, not the exact coordinates of field F-07.
+  const farmLocation =
+    p.id === "MD-CAR-050826-F07"
+      ? {
+          lat: 47.3884177,
+          lon: 28.8285808,
+          label: "Orhei, Republic of Moldova",
+        }
+      : null;
+
+  const osmEmbedUrl = farmLocation
+    ? `https://www.openstreetmap.org/export/embed.html?bbox=${
+        farmLocation.lon - 0.055
+      }%2C${farmLocation.lat - 0.035}%2C${farmLocation.lon + 0.055}%2C${
+        farmLocation.lat + 0.035
+      }&layer=mapnik&marker=${farmLocation.lat}%2C${farmLocation.lon}`
+    : "";
+
+  const osmPageUrl = farmLocation
+    ? `https://www.openstreetmap.org/?mlat=${farmLocation.lat}&mlon=${farmLocation.lon}#map=13/${farmLocation.lat}/${farmLocation.lon}`
+    : "";
+
   return (
     <main className="min-h-screen">
       <header className="border-b bg-card/50 backdrop-blur">
@@ -137,9 +160,56 @@ function ProductPage() {
         </section>
 
         <section className="rounded-2xl border bg-muted/40 p-6">
-          <h3 className="font-semibold">Farm location</h3>
-          <p className="mt-1 text-sm text-muted-foreground">{p.region}</p>
-          <div className="mt-4 aspect-[2/1] w-full overflow-hidden rounded-xl border bg-[url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&auto=format')] bg-cover bg-center opacity-90" />
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h3 className="font-semibold">Farm location</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{p.region}</p>
+            </div>
+
+            {farmLocation && (
+              <a
+                href={osmPageUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border bg-background px-3 py-2 text-sm font-medium transition-colors hover:bg-muted"
+              >
+                <MapPin className="h-4 w-4" />
+                Open in OpenStreetMap
+              </a>
+            )}
+          </div>
+
+          {farmLocation ? (
+            <div className="mt-4 overflow-hidden rounded-xl border bg-card shadow-sm">
+              <iframe
+                title={`OpenStreetMap location of ${p.farm}`}
+                src={osmEmbedUrl}
+                className="h-[360px] w-full border-0 sm:h-[440px]"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+
+              <div className="flex flex-wrap items-center justify-between gap-2 border-t bg-background px-4 py-3 text-xs text-muted-foreground">
+                <span>
+                  Approximate location · {farmLocation.label} ·{" "}
+                  {farmLocation.lat.toFixed(5)}, {farmLocation.lon.toFixed(5)}
+                </span>
+
+                <a
+                  href="https://www.openstreetmap.org/copyright"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-medium hover:text-foreground hover:underline"
+                >
+                  © OpenStreetMap contributors
+                </a>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-4 rounded-xl border bg-card p-6 text-sm text-muted-foreground">
+              Precise map coordinates are not available for this product yet.
+            </div>
+          )}
         </section>
       </div>
 
