@@ -18,9 +18,9 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedAlertsRouteImport } from './routes/_authenticated/alerts'
 import { Route as AuthenticatedTicketsRouteImport } from './routes/_authenticated/tickets'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
-import { Route as AuthenticatedTicketsIdRouteImport } from './routes/_authenticated/tickets.$id'
-import { Route as AuthenticatedTicketsNewRouteImport } from './routes/_authenticated/tickets.new'
-import { Route as ConsumerProductIdRouteImport } from './routes/consumer.product.$id'
+import { Route as AuthenticatedTicketsIdRouteImport } from './routes/_authenticated/tickets_.$id'
+import { Route as AuthenticatedTicketsNewRouteImport } from './routes/_authenticated/tickets_.new'
+import { Route as ConsumerProductIdRouteImport } from './routes/consumer_.product.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -67,29 +67,29 @@ const ApiChatRoute = ApiChatRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedTicketsIdRoute = AuthenticatedTicketsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AuthenticatedTicketsRoute,
+  id: '/tickets_/$id',
+  path: '/tickets/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedTicketsNewRoute = AuthenticatedTicketsNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AuthenticatedTicketsRoute,
+  id: '/tickets_/new',
+  path: '/tickets/new',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ConsumerProductIdRoute = ConsumerProductIdRouteImport.update({
-  id: '/product/$id',
-  path: '/product/$id',
-  getParentRoute: () => ConsumerRoute,
+  id: '/consumer_/product/$id',
+  path: '/consumer/product/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/consumer': typeof ConsumerRouteWithChildren
+  '/consumer': typeof ConsumerRoute
   '/farmer': typeof FarmerRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/alerts': typeof AuthenticatedAlertsRoute
-  '/tickets': typeof AuthenticatedTicketsRouteWithChildren
+  '/tickets': typeof AuthenticatedTicketsRoute
   '/api/chat': typeof ApiChatRoute
   '/tickets/$id': typeof AuthenticatedTicketsIdRoute
   '/tickets/new': typeof AuthenticatedTicketsNewRoute
@@ -98,11 +98,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/consumer': typeof ConsumerRouteWithChildren
+  '/consumer': typeof ConsumerRoute
   '/farmer': typeof FarmerRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/alerts': typeof AuthenticatedAlertsRoute
-  '/tickets': typeof AuthenticatedTicketsRouteWithChildren
+  '/tickets': typeof AuthenticatedTicketsRoute
   '/api/chat': typeof ApiChatRoute
   '/tickets/$id': typeof AuthenticatedTicketsIdRoute
   '/tickets/new': typeof AuthenticatedTicketsNewRoute
@@ -113,15 +113,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/consumer': typeof ConsumerRouteWithChildren
+  '/consumer': typeof ConsumerRoute
   '/farmer': typeof FarmerRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/alerts': typeof AuthenticatedAlertsRoute
-  '/_authenticated/tickets': typeof AuthenticatedTicketsRouteWithChildren
+  '/_authenticated/tickets': typeof AuthenticatedTicketsRoute
   '/api/chat': typeof ApiChatRoute
-  '/_authenticated/tickets/$id': typeof AuthenticatedTicketsIdRoute
-  '/_authenticated/tickets/new': typeof AuthenticatedTicketsNewRoute
-  '/consumer/product/$id': typeof ConsumerProductIdRoute
+  '/_authenticated/tickets_/$id': typeof AuthenticatedTicketsIdRoute
+  '/_authenticated/tickets_/new': typeof AuthenticatedTicketsNewRoute
+  '/consumer_/product/$id': typeof ConsumerProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,18 +161,19 @@ export interface FileRouteTypes {
     | '/_authenticated/alerts'
     | '/_authenticated/tickets'
     | '/api/chat'
-    | '/_authenticated/tickets/$id'
-    | '/_authenticated/tickets/new'
-    | '/consumer/product/$id'
+    | '/_authenticated/tickets_/$id'
+    | '/_authenticated/tickets_/new'
+    | '/consumer_/product/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  ConsumerRoute: typeof ConsumerRouteWithChildren
+  ConsumerRoute: typeof ConsumerRoute
   FarmerRoute: typeof FarmerRoute
   ApiChatRoute: typeof ApiChatRoute
+  ConsumerProductIdRoute: typeof ConsumerProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -240,77 +241,57 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/tickets/$id': {
-      id: '/_authenticated/tickets/$id'
-      path: '/$id'
+    '/_authenticated/tickets_/$id': {
+      id: '/_authenticated/tickets_/$id'
+      path: '/tickets/$id'
       fullPath: '/tickets/$id'
       preLoaderRoute: typeof AuthenticatedTicketsIdRouteImport
-      parentRoute: typeof AuthenticatedTicketsRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/tickets/new': {
-      id: '/_authenticated/tickets/new'
-      path: '/new'
+    '/_authenticated/tickets_/new': {
+      id: '/_authenticated/tickets_/new'
+      path: '/tickets/new'
       fullPath: '/tickets/new'
       preLoaderRoute: typeof AuthenticatedTicketsNewRouteImport
-      parentRoute: typeof AuthenticatedTicketsRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/consumer/product/$id': {
-      id: '/consumer/product/$id'
-      path: '/product/$id'
+    '/consumer_/product/$id': {
+      id: '/consumer_/product/$id'
+      path: '/consumer/product/$id'
       fullPath: '/consumer/product/$id'
       preLoaderRoute: typeof ConsumerProductIdRouteImport
-      parentRoute: typeof ConsumerRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface AuthenticatedTicketsRouteChildren {
-  AuthenticatedTicketsIdRoute: typeof AuthenticatedTicketsIdRoute
-  AuthenticatedTicketsNewRoute: typeof AuthenticatedTicketsNewRoute
-}
-
-const AuthenticatedTicketsRouteChildren: AuthenticatedTicketsRouteChildren = {
-  AuthenticatedTicketsIdRoute: AuthenticatedTicketsIdRoute,
-  AuthenticatedTicketsNewRoute: AuthenticatedTicketsNewRoute,
-}
-
-const AuthenticatedTicketsRouteWithChildren =
-  AuthenticatedTicketsRoute._addFileChildren(AuthenticatedTicketsRouteChildren)
-
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAlertsRoute: typeof AuthenticatedAlertsRoute
-  AuthenticatedTicketsRoute: typeof AuthenticatedTicketsRouteWithChildren
+  AuthenticatedTicketsRoute: typeof AuthenticatedTicketsRoute
+  AuthenticatedTicketsIdRoute: typeof AuthenticatedTicketsIdRoute
+  AuthenticatedTicketsNewRoute: typeof AuthenticatedTicketsNewRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedAlertsRoute: AuthenticatedAlertsRoute,
-  AuthenticatedTicketsRoute: AuthenticatedTicketsRouteWithChildren,
+  AuthenticatedTicketsRoute: AuthenticatedTicketsRoute,
+  AuthenticatedTicketsIdRoute: AuthenticatedTicketsIdRoute,
+  AuthenticatedTicketsNewRoute: AuthenticatedTicketsNewRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface ConsumerRouteChildren {
-  ConsumerProductIdRoute: typeof ConsumerProductIdRoute
-}
-
-const ConsumerRouteChildren: ConsumerRouteChildren = {
-  ConsumerProductIdRoute: ConsumerProductIdRoute,
-}
-
-const ConsumerRouteWithChildren = ConsumerRoute._addFileChildren(
-  ConsumerRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  ConsumerRoute: ConsumerRouteWithChildren,
+  ConsumerRoute: ConsumerRoute,
   FarmerRoute: FarmerRoute,
   ApiChatRoute: ApiChatRoute,
+  ConsumerProductIdRoute: ConsumerProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

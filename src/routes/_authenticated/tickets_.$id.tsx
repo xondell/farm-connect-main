@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/lib/use-auth";
 
-export const Route = createFileRoute("/_authenticated/tickets/$id")({
+export const Route = createFileRoute("/_authenticated/tickets_/$id")({
   head: () => ({ meta: [{ title: "Ticket — AgroLink" }] }),
   component: TicketDetail,
 });

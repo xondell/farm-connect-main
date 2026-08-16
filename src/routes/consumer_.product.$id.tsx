@@ -6,7 +6,7 @@ import { loadInspections, loadProduct } from "@/lib/consumer-store";
 import { Badge } from "@/components/ui/badge";
 import { HelpChat } from "@/components/consumer/help-chat";
 
-export const Route = createFileRoute("/consumer/product/$id")({
+export const Route = createFileRoute("/consumer_/product/$id")({
   head: ({ loaderData }: { loaderData?: Product }) => ({
     meta: [
       { title: loaderData ? `${loaderData.name} — AgroLink` : "Product — AgroLink" },
