@@ -191,8 +191,8 @@ function ProductPage() {
 
               <div className="flex flex-wrap items-center justify-between gap-2 border-t bg-background px-4 py-3 text-xs text-muted-foreground">
                 <span>
-                  Approximate location · {farmLocation.label} ·{" "}
-                  {farmLocation.lat.toFixed(5)}, {farmLocation.lon.toFixed(5)}
+                  Approximate location · {farmLocation.label} · {farmLocation.lat.toFixed(5)},{" "}
+                  {farmLocation.lon.toFixed(5)}
                 </span>
 
                 <a
