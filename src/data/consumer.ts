@@ -2,6 +2,7 @@ import tomatoImg from "@/assets/product-tomato.jpg";
 import cucumberImg from "@/assets/product-cucumber.jpg";
 import eggsImg from "@/assets/product-eggs.jpg";
 import carrotImg from "@/assets/product-carrot.png";
+import juiceImg from "@/assets/product-juice.png";
 
 export type Product = {
   id: string;
@@ -103,6 +104,46 @@ export const products: Record<string, Product> = {
       { name: "Microbiology", lab: "SanExpert", date: "08/06/2026", result: "passed" },
     ],
   },
+  "MAR-2026-001": {
+    id: "MAR-2026-001",
+    name: "Marata Action 9 Fruits Juice 250 ml",
+    farm: "Sklavenitis Group",
+    region: "Peristeri, Athens, Greece",
+    producedAt: "Best before 25.08.2027",
+    image: juiceImg,
+    timeline: [
+      {
+        stage: "Blending",
+        date: "Greece",
+        note: "100% juice from 9 fruits: apple 30%, peach purée, grape, orange, kiwi, apricot, passion fruit, mango, pineapple",
+      },
+      {
+        stage: "Vitamins",
+        date: "250 ml pack",
+        note: "7 added vitamins (E, C, B1, B2, B6, B3, B9) — 50% of reference intake each",
+      },
+      {
+        stage: "Pasteurization",
+        date: "Production line",
+        note: "Heat-treated, stored cool and dry until opening",
+      },
+      {
+        stage: "Packaging",
+        date: "2026",
+        note: "250 ml SIG aseptic carton, FSC certified, EAN 5202576043978",
+      },
+      {
+        stage: "On shelf",
+        date: "Sklavenitis",
+        note: "Single pack €0.40 (€1.60/l), shake well before drinking",
+      },
+    ],
+    inspections: [
+      { name: "Sugars & composition", lab: "LabCheck", date: "08/10/2026", result: "passed" },
+      { name: "Vitamins", lab: "LabCheck", date: "08/10/2026", result: "passed" },
+      { name: "Microbiology", lab: "SanExpert", date: "08/11/2026", result: "passed" },
+    ],
+  },
 };
 
 export type InspectionNewsItem = {
@@ -154,6 +195,13 @@ export const inspectionNews: InspectionNewsItem[] = [
     farm: "GELINO-GRUP SRL",
     date: "August 6, 2026",
     lab: "AgroTest",
+    result: "passed" as const,
+  },
+  {
+    product: "Marata Action 9 Fruits Juice",
+    farm: "Sklavenitis Group",
+    date: "August 10, 2026",
+    lab: "LabCheck",
     result: "passed" as const,
   },
 ];

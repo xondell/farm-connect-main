@@ -41,7 +41,9 @@ INSERT INTO public.products (code, name, farm, region, produced_at, timeline) VA
 ('EGG-2026-088', 'Grade C1 Free-Range Chicken Eggs', 'Utro Farm', 'Tula Region, Ramenye village', 'July 25, 2026',
  '[{"stage":"Laying","date":"July 23-25, 2026","note":"Laying hens, Lohmann Brown breed"},{"stage":"Sorting","date":"July 25, 2026","note":"Automatic by weight"},{"stage":"Packaging","date":"July 25, 2026","note":"Cardboard tray, 10 pcs"},{"stage":"Inspection","date":"July 26, 2026","note":"Veterinary service"},{"stage":"On shelf","date":"July 27, 2026","note":"VkusVill, Tula"}]'::jsonb),
 ('MD-CAR-050826-F07', 'Fresh Basket Washed Carrots 500 g', 'GELINO-GRUP SRL', 'Orhei, Republic of Moldova', 'August 7, 2026',
- '[{"stage":"Sowing","date":"March 18, 2026","note":"Field F-07, Orhei - variety Nandrin F1"},{"stage":"Harvest","date":"August 5, 2026","note":"Field F-07, yield 48.6 t/ha"},{"stage":"Washing & sorting","date":"August 6, 2026","note":"Washed with drinking water, calibrated 20-40 mm"},{"stage":"Packaging","date":"August 7, 2026","note":"500 g tray, Fresh Basket brand, GTIN 4842142001196"},{"stage":"Cold storage","date":"August 7, 2026","note":"Cold chain +5...+7 C"},{"stage":"On shelf","date":"August 7, 2026","note":"GELINO-GRUP distribution"}]'::jsonb);
+ '[{"stage":"Sowing","date":"March 18, 2026","note":"Field F-07, Orhei - variety Nandrin F1"},{"stage":"Harvest","date":"August 5, 2026","note":"Field F-07, yield 48.6 t/ha"},{"stage":"Washing & sorting","date":"August 6, 2026","note":"Washed with drinking water, calibrated 20-40 mm"},{"stage":"Packaging","date":"August 7, 2026","note":"500 g tray, Fresh Basket brand, GTIN 4842142001196"},{"stage":"Cold storage","date":"August 7, 2026","note":"Cold chain +5...+7 C"},{"stage":"On shelf","date":"August 7, 2026","note":"GELINO-GRUP distribution"}]'::jsonb),
+('MAR-2026-001', 'Marata Action 9 Fruits Juice 250 ml', 'Sklavenitis Group', 'Peristeri, Athens, Greece', 'Best before 25.08.2027',
+ '[{"stage":"Blending","date":"Greece","note":"100% juice from 9 fruits: apple 30%, peach puree, grape, orange, kiwi, apricot, passion fruit, mango, pineapple"},{"stage":"Vitamins","date":"250 ml pack","note":"7 added vitamins (E, C, B1, B2, B6, B3, B9) - 50% of reference intake each"},{"stage":"Pasteurization","date":"Production line","note":"Heat-treated, stored cool and dry until opening"},{"stage":"Packaging","date":"2026","note":"250 ml SIG aseptic carton, FSC certified, EAN 5202576043978"},{"stage":"On shelf","date":"Sklavenitis","note":"Single pack 0.40 EUR (1.60 EUR/l), shake well before drinking"}]'::jsonb);
 
 -- Link product quality checks (English, matches the consumer UI).
 INSERT INTO public.inspection_cards
@@ -57,4 +59,7 @@ VALUES
   ('Grade C1 Free-Range Chicken Eggs', 'Utro Farm', 'VetLab', '2026-07-26', 'passed', 'Freshness', 'EGG-2026-088'),
   ('Fresh Basket Washed Carrots', 'GELINO-GRUP SRL', 'AgroTest', '2026-08-06', 'passed', 'Pesticides', 'MD-CAR-050826-F07'),
   ('Fresh Basket Washed Carrots', 'GELINO-GRUP SRL', 'AgroTest', '2026-08-06', 'passed', 'Nitrates', 'MD-CAR-050826-F07'),
-  ('Fresh Basket Washed Carrots', 'GELINO-GRUP SRL', 'SanExpert', '2026-08-06', 'passed', 'Microbiology', 'MD-CAR-050826-F07');
+  ('Fresh Basket Washed Carrots', 'GELINO-GRUP SRL', 'SanExpert', '2026-08-06', 'passed', 'Microbiology', 'MD-CAR-050826-F07'),
+  ('Marata Action 9 Fruits Juice', 'Sklavenitis Group', 'LabCheck', '2026-08-10', 'passed', 'Sugars & composition', 'MAR-2026-001'),
+  ('Marata Action 9 Fruits Juice', 'Sklavenitis Group', 'LabCheck', '2026-08-10', 'passed', 'Vitamins', 'MAR-2026-001'),
+  ('Marata Action 9 Fruits Juice', 'Sklavenitis Group', 'SanExpert', '2026-08-11', 'passed', 'Microbiology', 'MAR-2026-001');
