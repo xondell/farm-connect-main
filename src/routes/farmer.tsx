@@ -133,7 +133,7 @@ function FarmerDashboard() {
                         <Timer className="h-3.5 w-3.5" /> ROI ≈ {t.roiMonths} mo
                       </span>
                       <span className="inline-flex items-center gap-1">
-                        <BadgeCheck className="h-3.5 w-3.5" /> ~₽{t.cost.toLocaleString("en-US")}
+                        <BadgeCheck className="h-3.5 w-3.5" /> ~£{t.cost.toLocaleString("en-US")}
                       </span>
                     </div>
                   </div>
